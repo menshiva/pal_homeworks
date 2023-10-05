@@ -1,9 +1,9 @@
-#include <cstdio>
-#include <cmath>
+#include <stdio.h>
+#include <math.h>
 
-struct Point {
+typedef struct P {
     int x, y;
-};
+} Point;
 
 double getDist(const Point a, const Point b) {
     int xDiff = b.x - a.x;
@@ -18,7 +18,7 @@ int main() {
     Point firstPoint;
     scanf("%d %d", &firstPoint.x, &firstPoint.y);
 
-    auto prevPoint = firstPoint;
+    Point prevPoint = firstPoint;
     Point currPoint;
     double dists = 0.0;
 

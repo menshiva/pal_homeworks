@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.26.4)
-project(hw0)
+project(hw0 C)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_C_STANDARD 17)
 
-add_executable(hw0 main.cpp)
+add_executable(hw0 main.c)
+target_link_libraries(hw0 m)
