@@ -42,11 +42,11 @@ struct Edge {
     int32_t weight;
 };
 
-// I know that global variables is a bad practice, but this is performance-hw, so
-static KruskalVertex _kruskalVerticesInsideClass[500];
-static uint16_t _kruskalVerticesInsideClassNum;
-static KruskalEdge _kruskalEdgesInsideClass[10000];
-static uint16_t _kruskalEdgesInsideClassNum;
+// I know that global variables is a bad practice, but this is only a single file hw, so
+KruskalVertex _kruskalVerticesInsideClass[500];
+uint16_t _kruskalVerticesInsideClassNum;
+KruskalEdge _kruskalEdgesInsideClass[10000];
+uint16_t _kruskalEdgesInsideClassNum;
 
 struct Vertex {
     uint16_t getOrCreateKruskalVertexInsideClassIdx() {
@@ -69,22 +69,22 @@ struct Vertex {
 
 using Class = std::vector<uint16_t>;
 
-// I know that global variables is a bad practice, but this is performance-hw, so
-static Vertex _vertices[500];
-static uint16_t _verticesNum;
+// I know that global variables is a bad practice, but this is only a single file hw, so
+Vertex _vertices[500];
+uint16_t _verticesNum;
 
-static ClassKruskalVertex _kruskalClasses[500];
-static uint16_t _kruskalClassesNum;
-static KruskalEdge _kruskalEdgesBetweenClasses[10000];
-static uint16_t _kruskalEdgesBetweenClassesNum;
+ClassKruskalVertex _kruskalClasses[500];
+uint16_t _kruskalClassesNum;
+KruskalEdge _kruskalEdgesBetweenClasses[10000];
+uint16_t _kruskalEdgesBetweenClassesNum;
 
 template <typename Vert>
-static uint16_t ufFindParent(Vert *kruskalVertices, const uint16_t idx) {
+uint16_t ufFindParent(Vert *kruskalVertices, const uint16_t idx) {
     return kruskalVertices[idx].boss >= 0 ? (kruskalVertices[idx].boss = ufFindParent(kruskalVertices, kruskalVertices[idx].boss)) : idx;
 }
 
 template <typename Vert>
-static void ufUnion(Vert *kruskalVertices, const uint16_t idxA, const uint16_t idxB) {
+void ufUnion(Vert *kruskalVertices, const uint16_t idxA, const uint16_t idxB) {
     auto &vA = kruskalVertices[idxA];
     auto &vB = kruskalVertices[idxB];
     if (vA.rank < vB.rank)
@@ -96,7 +96,7 @@ static void ufUnion(Vert *kruskalVertices, const uint16_t idxA, const uint16_t i
     }
 }
 
-static void kruskal(
+void kruskal(
         KruskalVertex *kruskalVertices, uint16_t kruskalVerticesNum,
         KruskalEdge *kruskalEdges, const uint16_t kruskalEdgesNum,
         long long &res
@@ -119,7 +119,7 @@ static void kruskal(
     }
 }
 
-static bool kruskal(
+bool kruskal(
         ClassKruskalVertex *kruskalVertices, uint16_t kruskalVerticesNum,
         KruskalEdge *kruskalEdges, const uint16_t kruskalEdgesNum,
         long long &res
@@ -151,7 +151,7 @@ static bool kruskal(
     return false;
 }
 
-static Class fillClassKruskalDataAndBuildClass(const uint16_t startVertIdx, const int16_t neededDist) {
+Class fillClassKruskalDataAndBuildClass(const uint16_t startVertIdx, const int16_t neededDist) {
     Class result;
 
     const uint16_t newClassIdx = _kruskalClassesNum;
@@ -198,7 +198,7 @@ static Class fillClassKruskalDataAndBuildClass(const uint16_t startVertIdx, cons
     return result;
 }
 
-static void fillClassesKruskalDataAndComputeSumClassesMinSpanWeight(const uint16_t centerVertexIdx, long long &sumClassesMinSpanWeightOut) {
+void fillClassesKruskalDataAndComputeSumClassesMinSpanWeight(const uint16_t centerVertexIdx, long long &sumClassesMinSpanWeightOut) {
     _vertices[centerVertexIdx].dist = 0;
     std::vector<Class> currentUnion, nextUnion({{centerVertexIdx}});
 
@@ -234,7 +234,7 @@ static void fillClassesKruskalDataAndComputeSumClassesMinSpanWeight(const uint16
     }
 }
 
-static bool solve(const uint16_t centerVertexIdx, long long &result) {
+bool solve(const uint16_t centerVertexIdx, long long &result) {
     _kruskalClassesNum = 0;
     _kruskalEdgesBetweenClassesNum = 0;
 
